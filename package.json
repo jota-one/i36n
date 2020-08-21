@@ -1,0 +1,24 @@
+{
+  "name": "@jota-one/i36n",
+  "version": "0.1.0",
+  "description": "Translation manager twice simpler and twice better",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jota-one/i36n.git"
+  },
+  "keywords": [
+    "i18n",
+    "translate",
+    "vue"
+  ],
+  "author": "Juniors at Work",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jota-one/i36n/issues"
+  },
+  "dependencies": {
+    "snarkdown": "^1.2.2",
+    "lodash.get": "^4.4.2"
+  }
+}
