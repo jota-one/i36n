@@ -36,7 +36,7 @@ import { provideI36n } from '@jota-one/i36n'
 const load = async lang => (await import(`@/i18n/${lang}.json`)).default
 
 setup(props) {
-  provideI36n(props.ln, { load })
+  provideI36n(props.language, { load })
 }
 </script>
 ```
