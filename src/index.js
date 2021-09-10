@@ -4,11 +4,10 @@ import { replace, extractPlaceholders } from '@jota-one/replacer'
 
 const i36nSymbol = Symbol()
 
-const provideI36n = function (language, { load }) {
+const provideI36n = function (language, { load, showKey = ref(false) }) {
   const loaded = ref(0)
   const labels = reactive({})
   const currentLanguage = ref(language)
-  const showKey = ref(false)
 
   const _key = (language, key) => {
     if (!labels[language]) {
@@ -32,11 +31,12 @@ const provideI36n = function (language, { load }) {
     return `{${key}${plh}}`
   }
 
-  const _format = (value, params, source) => {
+  const _format = (value, params, source, markdown = true) => {
+    const mdFn = markdown ? md : a => a
     if (Array.isArray(value)) {
-      return value.map(v => md(replace(v, params, source)))
+      return value.map(v => mdFn(replace(v, params, source)))
     }
-    return md(replace(value, params, source))
+    return mdFn(replace(value, params, source))
   }
 
   const $label = computed(() => {
@@ -51,7 +51,10 @@ const provideI36n = function (language, { load }) {
     }
 
     return langLabels
-      ? (key, params) => _format(langLabels[key], params, langLabels) || `{${key}}`
+      ? (key, params, lang = null, markdown = true) => {
+        const refLabels = lang ? labels[lang] : langLabels
+        return _format(refLabels[key], params, refLabels, markdown) || `{${key}}`
+      }
       : () => ' '
   })
 
