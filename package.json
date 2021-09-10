@@ -1,6 +1,6 @@
 {
   "name": "@jota-one/i36n",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Translation manager twice simpler and twice better",
   "main": "src/index.js",
   "repository": {
