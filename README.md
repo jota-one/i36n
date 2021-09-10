@@ -33,7 +33,7 @@ In your `setup()` function, call the `provideI36n()` function. You need to pass 
 import { provideI36n } from '@jota-one/i36n'
 // ... imports, etc..
 
-const load = async ln => (await import(`@/i18n/${ln}.json`)).default
+const load = async lang => (await import(`@/i18n/${lang}.json`)).default
 
 setup(props) {
   provideI36n(props.ln, { load })
