@@ -4,7 +4,7 @@ import { replace, extractPlaceholders } from '@jota-one/replacer'
 
 const i36nSymbol = Symbol()
 
-const provideI36n = function (language, { load, showKey = ref(false) }) {
+const provideI36n = function (language, { load, showKey = ref(false) }, app) {
   const loaded = ref(0)
   const labels = reactive({})
   const currentLanguage = ref(language)
@@ -78,7 +78,11 @@ const provideI36n = function (language, { load, showKey = ref(false) }) {
     $label
   }
 
-  provide(i36nSymbol, i36n)
+  if (app) {
+    app.provide(i36nSymbol, i36n)
+  } else {
+    provide(i36nSymbol, i36n)
+  }
 }
 
 const useI36n = function () {

@@ -41,6 +41,14 @@ setup(props) {
 </script>
 ```
 
+If you pass a 3rd argument (a Vue app instance) to the `provideI36n`, it will provide the feature on the app directly.
+
+```js
+const app = createApp(App, { ... })
+provideI36n(props.language, { load }, app)
+```
+Internally, it will call `app.provide`, instead of the standalone `provide` function.
+
 ### Inject
 Once the providing is done, you can inject the library features anywhere in your app by using the `useI36n()` function.
 
