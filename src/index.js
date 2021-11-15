@@ -1,4 +1,4 @@
-import { ref, reactive, watch, computed, provide, inject } from 'vue'
+import { ref, reactive, watch, computed, provide, inject } from 'vue-demi'
 import md from 'snarkdown'
 import { replace, extractPlaceholders } from '@jota-one/replacer'
 

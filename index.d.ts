@@ -12,7 +12,7 @@ export type I36nUseObject = {
 }
 
 
-declare function provideI36n(lang: string, config: I36nConfig): void;
+declare function provideI36n(lang: string, config: I36nConfig, app: any): void;
 declare function useI36n(): I36nUseObject;
 
 export {
