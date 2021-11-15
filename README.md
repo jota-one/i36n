@@ -13,6 +13,12 @@ npm install @jota-one/i36n
 
 This a Vue 3 example, but it will also work with the composition-api module in Vue 2. @jota-one/i36n is compatible with Vue 2 and Vue 3 :tada:.
 
+To use it in Vue2, simply use:
+
+```js
+import { provideI36n, useI36n } from '@jota-one/i36n/src/index.vue2.js'
+```
+
 This module follow the provide/inject pattern, available in Vue. This means that you will first have to provide the translator on a top level part of your application.
 
 Then you can inject it wherever you need it.
