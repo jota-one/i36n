@@ -1,8 +1,9 @@
 {
   "name": "@jota-one/i36n",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Translation manager twice simpler and twice better",
   "main": "src/index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jota-one/i36n.git"
@@ -19,11 +20,15 @@
   },
   "dependencies": {
     "@jota-one/replacer": "^0.3.1",
-    "snarkdown": "^2.0.0",
-    "vue-demi": "^0.11.0"
+    "snarkdown": "^2.0.0"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.10",
     "vue": "^2.6.11 || >=3.0.5"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   }
 }
