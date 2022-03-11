@@ -58,14 +58,18 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
       : () => ' '
   })
 
+  const loadTranslations = async ln => {
+    labels[ln] = await load(ln)
+    loaded.value += 1
+  }
+
   let _switching = false
   watch(() => currentLanguage.value, async ln => {
     if (ln && !_switching) {
       _switching = true
 
       if (!labels[ln]) {
-        labels[ln] = await load(ln)
-        loaded.value += 1
+        await loadTranslations(ln)
       }
 
       _switching = false
@@ -75,7 +79,8 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
   const i36n = {
     language: currentLanguage,
     showKey,
-    $label
+    $label,
+    loadTranslations,
   }
 
   if (app) {

@@ -9,6 +9,7 @@ export type I36nUseObject = {
   language: string
   showKey: boolean
   $label: Function
+  loadTranslations: Function
 }
 
 
