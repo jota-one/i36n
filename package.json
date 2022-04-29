@@ -1,6 +1,6 @@
 {
   "name": "@jota-one/i36n",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Translation manager twice simpler and twice better",
   "main": "src/index.js",
   "types": "index.d.ts",
@@ -30,5 +30,8 @@
     "@vue/composition-api": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "vue": "^3.0.5"
   }
 }

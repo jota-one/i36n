@@ -39,9 +39,9 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
     return mdFn(replace(value, params, source))
   }
 
-  const $label = computed(() => {
+  const abstractLabel = defaultValue => {
     if (loaded.value === 0) {
-      return () => ' '
+      return () => defaultValue
     }
 
     const langLabels = labels[currentLanguage.value]
@@ -55,7 +55,15 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
         const refLabels = lang ? labels[lang] : langLabels
         return _format(refLabels[key], params, refLabels, markdown) || `{${key}}`
       }
-      : () => ' '
+      : () => defaultValue
+  }
+
+  const $label = computed(() => {
+    return abstractLabel(' ')
+  })
+
+  const $labels = computed(() => {
+    return abstractLabel([])
   })
 
   const loadTranslations = async ln => {
@@ -80,6 +88,7 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
     language: currentLanguage,
     showKey,
     $label,
+    $labels,
     loadTranslations,
   }
 
