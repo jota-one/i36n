@@ -56,7 +56,15 @@ export const initI36n = function (language, { load, showKey = ref(false) }) {
     }
 
     return langLabels
-      ? (key, params, lang = null, markdown = true) => {
+      ? (keyOrArgsObj, _params, _lang = null, _markdown = true) => {
+        const isObjectArgMode =
+          typeof keyOrArgsObj === 'object' && !(keyOrArgsObj instanceof Array)
+
+        const key = isObjectArgMode ? keyOrArgsObj.key : keyOrArgsObj
+        const params = isObjectArgMode ? keyOrArgsObj.params : _params
+        const lang = isObjectArgMode ? keyOrArgsObj.lang : _lang
+        const markdown = isObjectArgMode ? keyOrArgsObj.markdown : _markdown
+
         const refLabels = lang ? labels[lang] : langLabels
         return _format(refLabels[key], params, refLabels, markdown) || `{${key}}`
       }

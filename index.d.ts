@@ -1,8 +1,25 @@
 import {ComputedRef, Ref} from "vue";
 
-export type labelFunc = (key: string, params?: Record<string, string | number | undefined | null> | null, lang?: string | null, markdown?: boolean) => string;
+export type labelFuncPayload = {
+  key: string
+  params?: Record<string, string | number | undefined | null> | null
+  lang?: string | null
+  markdown?: boolean
+}
 
-export type labelsFunc = (key: string, params?: Record<string, string | number | undefined | null> | null, lang?: string | null, markdown?: boolean) => string[];
+export type labelFunc = (
+  keyOrArgsObj: string | labelFuncPayload,
+  params?: Record<string, string | number | undefined | null> | null,
+  lang?: string | null,
+  markdown?: boolean
+) => string;
+
+export type labelsFunc = (
+  key: string,
+  params?: Record<string, string | number | undefined | null> | null,
+  lang?: string | null,
+  markdown?: boolean
+) => string[];
 
 export type I36nConfig = {
   load: Function
