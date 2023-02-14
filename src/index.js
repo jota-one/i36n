@@ -3,8 +3,13 @@ import md from 'snarkdown'
 import { replace, extractPlaceholders } from '@jota-one/replacer'
 
 const i36nSymbol = Symbol()
+const i36n = {}
 
-const provideI36n = function (language, { load, showKey = ref(false) }, app) {
+export const getI36n = function() {
+  return i36n
+}
+
+export const initI36n = function (language, { load, showKey = ref(false) }) {
   const loaded = ref(0)
   const labels = reactive({})
   const currentLanguage = ref(language)
@@ -51,7 +56,15 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
     }
 
     return langLabels
-      ? (key, params, lang = null, markdown = true) => {
+      ? (keyOrArgsObj, _params, _lang = null, _markdown = true) => {
+        const isObjectArgMode =
+          typeof keyOrArgsObj === 'object' && !(keyOrArgsObj instanceof Array)
+
+        const key = isObjectArgMode ? keyOrArgsObj.key : keyOrArgsObj
+        const params = isObjectArgMode ? keyOrArgsObj.params : _params
+        const lang = isObjectArgMode ? keyOrArgsObj.lang : _lang
+        const markdown = isObjectArgMode ? keyOrArgsObj.markdown : _markdown
+
         const refLabels = lang ? labels[lang] : langLabels
         return _format(refLabels[key], params, refLabels, markdown) || `{${key}}`
       }
@@ -84,13 +97,15 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
     }
   }, { immediate: true })
 
-  const i36n = {
-    language: currentLanguage,
-    showKey,
-    $label,
-    $labels,
-    loadTranslations,
-  }
+  i36n.language = currentLanguage
+  i36n.showKey = showKey,
+  i36n.$label = $label
+  i36n.$labels = $labels
+  i36n.loadTranslations = loadTranslations
+}
+
+export const provideI36n = function (language, { load, showKey = ref(false) }, app) {
+  initI36n(language, { load, showKey })
 
   if (app) {
     app.provide(i36nSymbol, i36n)
@@ -99,8 +114,6 @@ const provideI36n = function (language, { load, showKey = ref(false) }, app) {
   }
 }
 
-const useI36n = function () {
+export const useI36n = function () {
   return inject(i36nSymbol)
 }
-
-export { useI36n, provideI36n }
