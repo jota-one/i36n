@@ -1,6 +1,6 @@
 {
   "name": "@jota-one/i36n",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Translation manager twice simpler and twice better",
   "main": "src/index.js",
   "types": "index.d.ts",
@@ -19,7 +19,7 @@
     "url": "https://github.com/jota-one/i36n/issues"
   },
   "dependencies": {
-    "@jota-one/replacer": "^0.3.1",
+    "@jota-one/replacer": "^0.3.2",
     "snarkdown": "^2.0.0"
   },
   "peerDependencies": {
