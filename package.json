@@ -1,6 +1,6 @@
 {
   "name": "@jota-one/i36n",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "type": "module",
   "description": "Translation manager twice simpler and twice better",
   "main": "dist/index.cjs",
