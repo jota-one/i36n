@@ -1,9 +1,16 @@
 {
   "name": "@jota-one/i36n",
   "version": "2.3.0",
+  "type": "module",
   "description": "Translation manager twice simpler and twice better",
-  "main": "src/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "index.d.ts",
+  "files": [
+    "dist/*",
+    "index.d.ts",
+    "src/index.vue2.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jota-one/i36n.git"
@@ -13,13 +20,17 @@
     "translate",
     "vue"
   ],
+  "scripts": {
+    "build": "node build.cjs",
+    "test": "ava"
+  },
   "author": "Juniors at Work",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jota-one/i36n/issues"
   },
   "dependencies": {
-    "@jota-one/replacer": "^0.3.2",
+    "@jota-one/replacer": "^0.4.0",
     "snarkdown": "^2.0.0"
   },
   "peerDependencies": {
@@ -32,6 +43,8 @@
     }
   },
   "devDependencies": {
-    "vue": "^3.0.5"
+    "ava": "^5.2.0",
+    "esbuild": "^0.17.11",
+    "vue": "^3.2.45"
   }
 }
