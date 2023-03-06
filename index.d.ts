@@ -1,5 +1,7 @@
 import {ComputedRef, Ref} from "vue";
 
+type labelsObject = Record<string, string>
+
 export type labelFuncPayload = {
   key: string
   params?: Record<string, string | number | undefined | null> | null
@@ -22,7 +24,7 @@ export type labelsFunc = (
 ) => string[];
 
 export type I36nConfig = {
-  load: Function
+  load(ln: string):Promise<labelsObject>
   showKey: Ref<boolean>
 }
 

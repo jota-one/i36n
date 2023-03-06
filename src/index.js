@@ -84,23 +84,28 @@ export const initI36n = function (language, { load, showKey = ref(false) }) {
     loaded.value += 1
   }
 
-  let _switching = false
-  watch(() => currentLanguage.value, async ln => {
+  const setLanguage = async ln => {
     if (ln && !_switching) {
       _switching = true
 
       if (!labels[ln]) {
         await loadTranslations(ln)
       }
+      currentLanguage.value = ln
 
       _switching = false
     }
-  }, { immediate: true })
+    return true
+  }
+
+  let _switching = false
+  watch(currentLanguage, setLanguage, { immediate: true })
 
   i36n.language = currentLanguage
-  i36n.showKey = showKey,
+  i36n.showKey = showKey
   i36n.$label = $label
   i36n.$labels = $labels
+  i36n.setLanguage = setLanguage
   i36n.loadTranslations = loadTranslations
 }
 
