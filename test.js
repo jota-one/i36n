@@ -47,9 +47,9 @@ test('changing language should dynamically load translations', async t => {
 
 test('read a list of translations + use existing translation keys inside another one', t => {
   const { $labels } = getI36n()
-  t.deepEqual($labels.value('baz'), [
+  t.deepEqual($labels.value('baz', { cms: 'hypercontent' }), [
     'But there is more:',
-    'Do you know {cms}?',
+    'Do you know hypercontent?',
     `Btw, did I tell you that ${translations.en.foo}?`
   ])
 })
@@ -59,4 +59,16 @@ test('showKey flag allows to see keys instead of translated strings', t => {
   showKey.value = true
   t.is($label.value('foo'), `{foo}`)
   showKey.value = false
+})
+
+test('showKey flag allows to see keys and placeholders instead of translated strings', t => {
+  const { $label, showKey } = getI36n()
+  showKey.value = true
+  t.is($label.value('bar'), `{bar, [tool]}`)
+  showKey.value = false
+})
+
+test('ignore unused placeholders', t => {
+  const { $label } = getI36n()
+  t.is($label.value('bar', { thing: 'drosse' }), translations.en.bar)
 })
