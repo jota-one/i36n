@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "ava": "^5.2.0",
+    "esbuild": "^0.17.11",
     "vue": "^3.2.45"
   }
 }
