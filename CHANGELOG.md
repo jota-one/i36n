@@ -1,3 +1,16 @@
+# v2.4.1 (Tue Mar 07 2023)
+
+#### 🐛 Bug Fix
+
+- ci: fix build script [#5](https://github.com/jota-one/i36n/pull/5) (joel@jota.one [@jorinho](https://github.com/jorinho))
+
+#### Authors: 2
+
+- Joel Poulin (joel@jota.one)
+- Jorinho ([@jorinho](https://github.com/jorinho))
+
+---
+
 # v2.4.0 (Mon Mar 06 2023)
 
 #### 🚀 Enhancement
