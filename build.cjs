@@ -13,5 +13,6 @@ build({
   outfile: './dist/index.js',
   bundle: true,
   format: 'esm',
+  external: ['vue', '@vue/composition-api'],
   minify: true
 }).catch(() => process.exit(1))

@@ -25,7 +25,7 @@ export type labelsFunc = (
 
 export type I36nConfig = {
   load(ln: string):Promise<labelsObject>
-  showKey: Ref<boolean>
+  showKey?: Ref<boolean>
 }
 
 export type I36nUseObject = {
