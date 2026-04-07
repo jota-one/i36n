@@ -39,16 +39,17 @@ jobs:
           # Fetch all history and tags so `gh release create` can generate changelogs.
           fetch-depth: 0
 
+      - name: 'Install pnpm'
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
+
       - name: 'Setup Node.js and Configure npm'
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: 'Install Dependencies with pnpm'
-        uses: pnpm/action-setup@v3
-        with:
-          version: latest
       - run: pnpm install --frozen-lockfile
 
       - name: 'Security Audit'
@@ -95,7 +96,7 @@ jobs:
           npm version $BUMP --no-git-tag-version
 
           echo "Publishing to npm..."
-          npm publish --access public
+          npm publish --access public --provenance
 
       - name: 'Create GitHub Tag and Release'
         env:
