@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish:
-    # This job's condition is key:
+    # This job's condition is key!
     # It runs if the PR was merged AND one of these is true:
     # 1. The source branch was 'next' (for major releases).
     # 2. The PR has a 'release:patch' or 'release:minor' label.
