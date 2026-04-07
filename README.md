@@ -96,4 +96,6 @@ As long as its value is `false`, you won't notice anything. But if you change th
 
 This is incredibly useful while you develop, trust us.
 
-See a "demo" in the animated gif [on this page](https://jota.one/libraries/#i36n)
+Here is a demo:
+
+![image](i36n.gif)
