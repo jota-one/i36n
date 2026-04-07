@@ -1,4 +1,4 @@
-import { ref, reactive, watch, computed, provide, inject, type Ref, type ComputedRef, type App } from 'vue'
+import { ref, reactive, watch, provide, inject, type Ref, type App } from 'vue'
 import md from 'snarkdown'
 import { replace, extractPlaceholders } from '@jota-one/replacer'
 
@@ -34,8 +34,8 @@ export type I36nConfig = {
 export type I36nInstance = {
   language: Ref<string>
   showKey: Ref<boolean>
-  $label: ComputedRef<LabelFunc>
-  $labels: ComputedRef<LabelsFunc>
+  t: LabelFunc
+  tList: LabelsFunc
   setLanguage(ln: string): Promise<boolean>
   loadTranslations(ln: string): Promise<void>
 }
@@ -80,33 +80,40 @@ export const initI36n = (language: string, { load, showKey = ref(false) }: I36nC
     return mdFn(replace(value, params, source))
   }
 
-  const abstractLabel = <T>(defaultValue: T) => {
-    if (loaded.value === 0) {
-      return () => defaultValue
+  const t: LabelFunc = (keyOrArgsObj, _params?, _lang = null, _markdown = true) => {
+    if (loaded.value === 0) return ' '
+
+    if (showKey.value) {
+      const key = typeof keyOrArgsObj === 'object' ? keyOrArgsObj.key : keyOrArgsObj
+      return _key(currentLanguage.value, key) as string
     }
 
     const langLabels = labels[currentLanguage.value]
+    if (!langLabels) return ' '
 
-    if (showKey.value) {
-      return (key: string) => _key(currentLanguage.value, key)
-    }
+    const isObjectArgMode = typeof keyOrArgsObj === 'object' && !(keyOrArgsObj instanceof Array)
+    const key = isObjectArgMode ? (keyOrArgsObj as LabelFuncPayload).key : (keyOrArgsObj as string)
+    const params = isObjectArgMode ? (keyOrArgsObj as LabelFuncPayload).params : _params
+    const lang = isObjectArgMode ? ((keyOrArgsObj as LabelFuncPayload).lang ?? null) : _lang
+    const markdown = isObjectArgMode ? ((keyOrArgsObj as LabelFuncPayload).markdown ?? true) : _markdown
 
-    return langLabels
-      ? (keyOrArgsObj: string | LabelFuncPayload, _params?: Record<string, unknown> | null, _lang: string | null = null, _markdown = true) => {
-          const isObjectArgMode = typeof keyOrArgsObj === 'object' && !(keyOrArgsObj instanceof Array)
-          const key = isObjectArgMode ? (keyOrArgsObj as LabelFuncPayload).key : (keyOrArgsObj as string)
-          const params = isObjectArgMode ? (keyOrArgsObj as LabelFuncPayload).params : _params
-          const lang = isObjectArgMode ? (keyOrArgsObj as LabelFuncPayload).lang ?? null : _lang
-          const markdown = isObjectArgMode ? ((keyOrArgsObj as LabelFuncPayload).markdown ?? true) : _markdown
-
-          const refLabels = lang ? labels[lang] : langLabels
-          return _format(refLabels[key], params, refLabels, markdown) || `{${key}}`
-        }
-      : () => defaultValue
+    const refLabels = lang ? labels[lang] : langLabels
+    return _format(refLabels[key], params, refLabels, markdown) as string || `{${key}}`
   }
 
-  const $label = computed(() => abstractLabel(' ') as LabelFunc)
-  const $labels = computed(() => abstractLabel([]) as LabelsFunc)
+  const tList: LabelsFunc = (key, _params?, _lang = null, _markdown = true) => {
+    if (loaded.value === 0) return []
+
+    if (showKey.value) {
+      return _key(currentLanguage.value, key) as string[]
+    }
+
+    const langLabels = labels[currentLanguage.value]
+    if (!langLabels) return []
+
+    const refLabels = _lang ? labels[_lang] : langLabels
+    return _format(refLabels[key], _params, refLabels, _markdown) as string[] || []
+  }
 
   const loadTranslations = async (ln: string): Promise<void> => {
     labels[ln] = await load(ln)
@@ -130,8 +137,8 @@ export const initI36n = (language: string, { load, showKey = ref(false) }: I36nC
 
   i36n.language = currentLanguage
   i36n.showKey = showKey
-  i36n.$label = $label
-  i36n.$labels = $labels
+  i36n.t = t
+  i36n.tList = tList
   i36n.setLanguage = setLanguage
   i36n.loadTranslations = loadTranslations
 }

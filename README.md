@@ -2,22 +2,14 @@
 Translation manager twice simpler and twice better
 
 ## Installation
-### As [npm](https://www.npmjs.com/package/@jota-one/i36n) dependency in your node project
+### As [npm](https://www.npmjs.com/package/i36n) dependency in your node project
 
 Simply install it as a dependency of the project you want to internationalize.
 ```shell
-npm install @jota-one/i36n
+npm install i36n
 ```
 
 ## Usage
-
-This a Vue 3 example, but it will also work with the composition-api module in Vue 2. @jota-one/i36n is compatible with Vue 2 and Vue 3 :tada:.
-
-To use it in Vue2, simply use:
-
-```js
-import { provideI36n, useI36n } from '@jota-one/i36n/src/index.vue2.js'
-```
 
 This module follow the provide/inject pattern, available in Vue. This means that you will first have to provide the translator on a top level part of your application.
 
@@ -27,7 +19,7 @@ Then you can inject it wherever you need it.
 Somewhere before you need your first label, you have to provide the library to your app.
 In your `<script>` tag first import the library:
 ```js
-import { provideI36n } from '@jota-one/i36n'
+import { provideI36n } from 'i36n'
 ```
 
 In your `setup()` function, call the `provideI36n()` function. You need to pass it 2 parameters:
@@ -36,7 +28,7 @@ In your `setup()` function, call the `provideI36n()` function. You need to pass 
 
 ```html
 <script>
-import { provideI36n } from '@jota-one/i36n'
+import { provideI36n } from 'i36n'
 // ... imports, etc..
 
 const load = async lang => (await import(`@/i18n/${lang}.json`)).default
@@ -60,29 +52,28 @@ Once the providing is done, you can inject the library features anywhere in your
 
 In your `<script>` tag, near the top, import the library
 ```js
-import { useI36n } from '@jota-one/i36n'
+import { useI36n } from 'i36n'
 ```
 
-In your `setup()` function, call the `useI36n()` function. It will give you the `$label()` translation function.
+In your `setup()` function, call the `useI36n()` function. It will give you the `t()` translation function.
 
-:warning: In Vue 3, you should rename it with a name not starting with à dollar sign, or you will have warnings.
 ```js
 setup() {
-  const { $label: label } = useI36n()
-  
+  const { t } = useI36n()
+
   // other cool stuffs
   // ...
   const meal = ref('kebab')
-  
-  return { label, meal }
+
+  return { t, meal }
 }
 ```
 
 In your template (or inside your setup function, further), use it.
 
 ```html
-<h1>{{ label('food_title') }}</h1>
-<p>{{ label('food_favorite', { meal }) }}</p>
+<h1>{{ t('food_title') }}</h1>
+<p>{{ t('food_favorite', { meal }) }}</p>
 ```
 
 Assuming that your current language translation file looks like this:
@@ -101,7 +92,7 @@ The above template will resolve in:
 ## And the killer feature
 You can pass a `showKey` property in the `provideI36n()` second parameter, along with the `load` method. This `showKey` must be a reactive variable (a `ref`) containing a Boolean.
 
-As long as its value is `false`, you won't notice anything. But if you change the value to `true`, the `$label()` function will display the label keys and the needed placeholders instead of resolving the label.
+As long as its value is `false`, you won't notice anything. But if you change the value to `true`, the `t()` function will display the label keys and the needed placeholders instead of resolving the label.
 
 This is incredibly useful while you develop, trust us.
 

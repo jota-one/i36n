@@ -29,25 +29,25 @@ beforeAll(() => {
 })
 
 it('read a translated string', () => {
-  const { $label } = getI36n()
-  expect($label.value('foo')).toBe('I like i36n very much')
+  const { t } = getI36n()
+  expect(t('foo')).toBe('I like i36n very much')
 })
 
 it('read a translated string with param', () => {
-  const { $label } = getI36n()
-  expect($label.value('bar', { tool: 'hypercontent' })).toBe('I like hypercontent even more!')
+  const { t } = getI36n()
+  expect(t('bar', { tool: 'hypercontent' })).toBe('I like hypercontent even more!')
 })
 
 it('changing language should dynamically load translations', async () => {
-  const { $label, setLanguage } = getI36n()
+  const { t, setLanguage } = getI36n()
   await setLanguage('fr')
-  expect($label.value('foo')).toBe("J'aime beaucoup i36n")
+  expect(t('foo')).toBe("J'aime beaucoup i36n")
   await setLanguage('en')
 })
 
 it('read a list of translations + use existing translation keys inside another one', () => {
-  const { $labels } = getI36n()
-  expect($labels.value('baz', { cms: 'hypercontent' })).toEqual([
+  const { tList } = getI36n()
+  expect(tList('baz', { cms: 'hypercontent' })).toEqual([
     'But there is more:',
     'Do you know hypercontent?',
     'Btw, did I tell you that I like i36n very much?'
@@ -55,20 +55,20 @@ it('read a list of translations + use existing translation keys inside another o
 })
 
 it('showKey flag allows to see keys instead of translated strings', () => {
-  const { $label, showKey } = getI36n()
+  const { t, showKey } = getI36n()
   showKey.value = true
-  expect($label.value('foo')).toBe('{foo}')
+  expect(t('foo')).toBe('{foo}')
   showKey.value = false
 })
 
 it('showKey flag allows to see keys and placeholders instead of translated strings', () => {
-  const { $label, showKey } = getI36n()
+  const { t, showKey } = getI36n()
   showKey.value = true
-  expect($label.value('bar')).toBe('{bar, [tool]}')
+  expect(t('bar')).toBe('{bar, [tool]}')
   showKey.value = false
 })
 
 it('ignore unused placeholders', () => {
-  const { $label } = getI36n()
-  expect($label.value('bar', { tool: 'hypercontent', unused: 'nope' })).toBe('I like hypercontent even more!')
+  const { t } = getI36n()
+  expect(t('bar', { tool: 'hypercontent', unused: 'nope' })).toBe('I like hypercontent even more!')
 })
