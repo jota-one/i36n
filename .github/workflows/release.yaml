@@ -80,8 +80,6 @@ jobs:
           fi
 
       - name: 'Bump Version and Publish to npm'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           BUMP=${{ steps.version_bump.outputs.BUMP_TYPE }}
           echo "Version bump type determined to be: $BUMP"
