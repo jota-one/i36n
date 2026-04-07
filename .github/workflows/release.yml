@@ -92,10 +92,10 @@ jobs:
           npm version "$PUBLISHED" --no-git-tag-version --allow-same-version
 
           # Bump to the new version
-          pnpm version $BUMP --no-git-tag
+          npm version $BUMP --no-git-tag-version
 
           echo "Publishing to npm..."
-          pnpm publish --no-git-checks
+          npm publish --access public
 
       - name: 'Create GitHub Tag and Release'
         env:
