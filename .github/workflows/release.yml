@@ -96,6 +96,7 @@ jobs:
           npm version $BUMP --no-git-tag-version
 
           echo "Publishing to npm..."
+          unset NODE_AUTH_TOKEN
           npm publish --access public --provenance
 
       - name: 'Create GitHub Tag and Release'
