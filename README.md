@@ -2,11 +2,11 @@
 Translation manager twice simpler and twice better
 
 ## Installation
-### As [npm](https://www.npmjs.com/package/i36n) dependency in your node project
+### As [npm](https://www.npmjs.com/package/@jota-one/i36n) dependency in your node project
 
 Simply install it as a dependency of the project you want to internationalize.
 ```shell
-npm install i36n
+npm install @jota-one/i36n
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ Then you can inject it wherever you need it.
 Somewhere before you need your first label, you have to provide the library to your app.
 In your `<script>` tag first import the library:
 ```js
-import { provideI36n } from 'i36n'
+import { provideI36n } from '@jota-one/i36n'
 ```
 
 In your `setup()` function, call the `provideI36n()` function. You need to pass it 2 parameters:
@@ -28,7 +28,7 @@ In your `setup()` function, call the `provideI36n()` function. You need to pass 
 
 ```html
 <script>
-import { provideI36n } from 'i36n'
+import { provideI36n } from '@jota-one/i36n'
 // ... imports, etc..
 
 const load = async lang => (await import(`@/i18n/${lang}.json`)).default
@@ -52,7 +52,7 @@ Once the providing is done, you can inject the library features anywhere in your
 
 In your `<script>` tag, near the top, import the library
 ```js
-import { useI36n } from 'i36n'
+import { useI36n } from '@jota-one/i36n'
 ```
 
 In your `setup()` function, call the `useI36n()` function. It will give you the `t()` translation function.

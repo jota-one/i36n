@@ -30,7 +30,7 @@ jobs:
 
     environment:
       name: npm-release # Links to the environment configured in GitHub Settings and on npmjs.com
-      url: https://www.npmjs.com/package/i36n
+      url: https://www.npmjs.com/package/@jota-one/i36n
 
     steps:
       - name: 'Checkout Repository'
@@ -86,7 +86,14 @@ jobs:
           BUMP=${{ steps.version_bump.outputs.BUMP_TYPE }}
           echo "Version bump type determined to be: $BUMP"
 
-          # pnpm's version command is similar to npm's
+          # Fetch the latest published version from npm, fall back to 0.0.0 if not found
+          PUBLISHED=$(npm view @jota-one/i36n version 2>/dev/null || echo "0.0.0")
+          echo "Latest published version: $PUBLISHED"
+
+          # Sync package.json to the published version before bumping
+          npm version "$PUBLISHED" --no-git-tag-version --allow-same-version
+
+          # Bump to the new version
           pnpm version $BUMP --no-git-tag
 
           echo "Publishing to npm..."
