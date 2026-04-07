@@ -1,5 +1,5 @@
 {
-  "name": "i36n",
+  "name": "@jota-one/i36n",
   "version": "0.0.0-local",
   "type": "module",
   "description": "Translation manager twice simpler and twice better",
