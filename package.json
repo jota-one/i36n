@@ -2,6 +2,7 @@
   "name": "@jota-one/i36n",
   "version": "0.0.0-local",
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "description": "Translation manager twice simpler and twice better",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -48,5 +49,8 @@
     "vite-plugin-dts": "^4.0.0",
     "vitest": "^3.0.0",
     "vue": "^3.5.0"
+  },
+  "volta": {
+    "node": "24.21.0"
   }
 }
